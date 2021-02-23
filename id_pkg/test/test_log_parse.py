@@ -74,6 +74,11 @@ class LogParseTest(unittest.TestCase):
         self.assertEqual( 1, df.loc[105003, 'Severity'] )
         self.assertEqual( '(Primary) Monitoring on interface interface_name waiting' , df.loc[105003, 'Text'])
         self.assertEqual( 'interface_name waiting', df.loc[105003, 'Interface'])
+        # ASA-1-105007: (Primary) Link status Down on interface interface_name.
+        self.assertEqual('ASA', df.loc[105007, 'Type'])
+        self.assertEqual(1, df.loc[105007, 'Severity'])
+        self.assertEqual('(Primary) Link status Down on interface interface_name.', df.loc[105007, 'Text'])
+        self.assertEqual('interface_name', df.loc[105007, 'Interface'])
 
 
 
