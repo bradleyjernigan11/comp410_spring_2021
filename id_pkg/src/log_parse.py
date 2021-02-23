@@ -21,6 +21,12 @@ class LogParse:
             (message, reason) = df.loc[id, 'Text'].split('Reason: ')
             df.loc[id, 'Reason'] = reason.rstrip()
 
+        if id == 114003:
+            # %ASA-1-114003: Failed to run cached commands in 4GE SSM I/O card (error error_string)
+            match = re.search(r'error (\w+)', df.loc[id, 'Text'])
+            if match:
+                df.loc[id, 'Error'] = match.group(1)
+
         if id == 326028:
             # %ASA-3-326028: Asynchronous error: error_message
             m = re.search(r' error: (\w+)', df.loc[id, 'Text'])
@@ -36,6 +42,7 @@ class LogParse:
             m = re.search(r' interface (\w+)', df.loc[id, 'Text'])
             if m:
                 df.loc[id, 'Interface'] = m.group(1)
+
 
 
         return df
