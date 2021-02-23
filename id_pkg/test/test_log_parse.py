@@ -62,6 +62,12 @@ class LogParseTest(unittest.TestCase):
                                                   'reason-string.')
         self.assertTrue(df.loc[103004, 'Reason'] == 'reason-string.')
 
+        # %ASA-1-114003: Failed to run cached commands in 4GE SSM I/O card (error error_string).
+        self.assertTrue(df.loc[114003, 'Type'] == 'ASA')
+        self.assertEqual(1, df.loc[114003, 'Severity'])
+        self.assertEqual('Failed to run cached commands in 4GE SSM I/O card (error error_string).', df.loc[114003, 'Text'])
+        self.assertEqual('error_string', df.loc[114003, 'Error'])
+
         # %ASA-3-326028: Asynchronous error: error_message
         self.assertTrue(df.loc[326028, 'Type'] == 'ASA')
         # expected, actual
@@ -69,18 +75,39 @@ class LogParseTest(unittest.TestCase):
         self.assertEqual('Asynchronous error: error_message', df.loc[326028, 'Text'])
         self.assertEqual('error_message', df.loc[326028, 'Error'])
 
+<<<<<<<<< Temporary merge branch 1
         # %ASA-1-105003: (Primary) Monitoring on interface interface_name waiting
         self.assertEqual('ASA', df.loc[105003, 'Type'] )
         self.assertEqual( 1, df.loc[105003, 'Severity'] )
         self.assertEqual( '(Primary) Monitoring on interface interface_name waiting' , df.loc[105003, 'Text'])
         self.assertEqual( 'interface_name waiting', df.loc[105003, 'Interface'])
-        # ASA-1-105007: (Primary) Link status Down on interface interface_name.
-        self.assertEqual('ASA', df.loc[105007, 'Type'])
-        self.assertEqual(1, df.loc[105007, 'Severity'])
-        self.assertEqual('(Primary) Link status Down on interface interface_name.', df.loc[105007, 'Text'])
-        self.assertEqual('interface_name', df.loc[105007, 'Interface'])
 
 
+=========
+        # %ASA-1-114001: Failed to initialize 4GE SSM I/O card (error error_string).
+        self.assertTrue(df.loc[114001, 'Type'] == 'ASA')
+        self.assertEqual(1, df.loc[114001, 'Severity'])
+        self.assertEqual('Failed to initialize 4GE SSM I/O card (error error_string).', df.loc[114001, 'Text'])
+        self.assertEqual('error_string', df.loc[114001, 'Error'])
+
+        # %ASA-1-114002: Failed to initialize SFP in 4GE SSM I/O card (error error_string).
+        self.assertTrue(df.loc[114002, 'Type'] == 'ASA')
+        self.assertEqual(1, df.loc[114002, 'Severity'])
+        self.assertEqual('Failed to initialize SFP in 4GE SSM I/O card (error error_string).', df.loc[114002, 'Text'])
+        self.assertEqual('error_string', df.loc[114002, 'Error'])
+
+        # %ASA-3-114007: Failed to get current msr in 4GE SSM I/O card (error error_string).
+        self.assertTrue(df.loc[114007, 'Type'] == 'ASA')
+        self.assertEqual(3, df.loc[114007, 'Severity'])
+        self.assertEqual('Failed to get current msr in 4GE SSM I/O card (error error_string).', df.loc[114007, 'Text'])
+        self.assertEqual('error_string', df.loc[114007, 'Error'])
+
+        # %ASA-3-114019: Failed to set media type in 4GE SSM I/O card (error error_string)
+        self.assertTrue(df.loc[114019, 'Type'] == 'ASA')
+        self.assertEqual(3, df.loc[114019, 'Severity'])
+        self.assertEqual('Failed to set media type in 4GE SSM I/O card (error error_string).', df.loc[114019, 'Text'])
+        self.assertEqual('error_string', df.loc[114019, 'Error'])
+>>>>>>>>> Temporary merge branch 2
 
 
 if __name__ == '__main__':
