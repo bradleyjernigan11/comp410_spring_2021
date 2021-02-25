@@ -130,40 +130,5 @@ class LogParseTest(unittest.TestCase):
         self.assertEqual('(Primary) Monitoring on interface interface_name normal', df.loc[105004, 'Text'])
         self.assertEqual('interface_name normal', df.loc[105004, 'Interface'])
 
-        # %ASA-3-114017: Failed to get link status in 4GE SSM I/O card (error error_string).
-        self.assertTrue(df.loc[114017, 'Type'] == 'ASA')
-        self.assertTrue(3, df.loc[114017, 'Severity'])
-        self.assertTrue('Failed to get link status in 4GE SSM I/O card (error error_string).', df.loc[114017, 'Text'])
-        self.assertTrue('error_message', df.loc[114017, 'Error'])
-
-        # %ASA-3-114018: Failed to set port speed in 4GE SSM I/O card (error error_string).
-        self.assertTrue(df.loc[114018, 'Type'] == 'ASA')
-        # expected, actual
-        self.assertEqual(3, df.loc[114018, 'Severity'])
-        self.assertEqual('Failed to set port speed in 4GE SSM I/O card (error error_string).', df.loc[114018, 'Text'])
-        self.assertEqual('error_string', df.loc[114018, 'Error'])
-
-        # %ASA-1-114002: Failed to initialize SFP in 4GE SSM I/O card (error error_string)
-        self.assertEqual('ASA', df.loc[114002, 'Type'])
-        self.assertEqual(1, df.loc[114002, 'Severity'])
-        self.assertEqual('Failed to initialize SFP in 4GE SSM I/O card (error error_string).', df.loc[114002, 'Text'])
-        self.assertEqual('error_string', df.loc[114002, 'Error'])
-
-        # %ASA-1-114001: Failed to initialize 4GE SSM I/O card (error error_string).
-        self.assertTrue(df.loc[114001, 'Type'] == 'ASA')
-        # expected, actual
-        self.assertEqual(1, df.loc[114001, 'Severity'])
-        self.assertEqual('Failed to initialize 4GE SSM I/O card (error error_string).', df.loc[114001, 'Text'])
-        self.assertEqual('error_string', df.loc[114001, 'Error'])
-
-        # %ASA-3-114006: Failed to get port statistics in 4GE SSM I/O card (error error_string)
-        self.assertTrue(df.loc[114006, 'Type'] == 'ASA')
-        # expected, actual
-        self.assertEqual(3, df.loc[114006, 'Severity'])
-        self.assertEqual('Failed to get port statistics in 4GE SSM I/O card (error error_string).',
-                         df.loc[114006, 'Text'])
-        self.assertEqual('error_string', df.loc[114006, 'Error'])
-
-
 if __name__ == '__main__':
     unittest.main()
