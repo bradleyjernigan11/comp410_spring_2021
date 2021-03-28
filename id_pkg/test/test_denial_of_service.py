@@ -37,6 +37,10 @@ class TestDenialofService(unittest.TestCase):
         # source should be identical to destination
         self.assertTrue((denial_of_service_log_df['Source'] == denial_of_service_log_df['Destination']).all)
 
+    def test_has_denial_of_service(self):
+        id_pkg_logs = detection.IdParse(self.log_file)
+        self.assertEqual(True, id_pkg_logs.has_denial_of_service())
+
 
 
 
