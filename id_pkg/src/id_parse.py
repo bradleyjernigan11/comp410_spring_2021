@@ -33,6 +33,12 @@ class IdParse(LogParse):
             if m:
                 rec['Session'] = m.group(1)
                 rec['Identifier'] = m.group(2)
+        if rec['ID'] == 106017:
+            m = re.search(r'from (\d+\.\d+\.\d+\.\d+) to (\d+\.\d+\.\d+\.\d+)', rec['Text'])
+            if m:
+                rec['Source'] = m.group(1)
+                rec['Destination'] = m.group(2)
+
         return rec
 
     def handle_syslog_message(self, line):
