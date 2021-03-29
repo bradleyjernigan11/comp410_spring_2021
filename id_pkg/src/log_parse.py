@@ -107,6 +107,11 @@ class LogParse:
             m = re.search(r'\(error (\w+)\)', df.loc[id, 'Text'])
             if m:
                 df.loc[id, 'Error'] = m.group(1)
+        if id == 105007:
+            # ASA-1-105007: (Primary) Link status Down on interface interface_name.
+            m = re.search(r' interface (\w+)', df.loc[id, 'Text'])
+            if m:
+                df.loc[id, 'Interface'] = m.group(1)
 
         return df
 

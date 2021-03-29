@@ -158,7 +158,11 @@ class LogParseTest(unittest.TestCase):
         self.assertEqual('Failed to get port statistics in 4GE SSM I/O card (error error_string).',
                          df.loc[114006, 'Text'])
         self.assertEqual('error_string', df.loc[114006, 'Error'])
-
+        # ASA-1-105007: (Primary) Link status Down on interface interface_name.
+        self.assertEqual('ASA', df.loc[105007, 'Type'])
+        self.assertEqual(1, df.loc[105007, 'Severity'])
+        self.assertEqual('(Primary) Link status Down on interface interface_name.', df.loc[105007, 'Text'])
+        self.assertEqual('interface_name', df.loc[105007, 'Interface'])
 
 if __name__ == '__main__':
     unittest.main()
