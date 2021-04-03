@@ -36,4 +36,5 @@ def pandas_demo():
 
 
 if __name__ == "__main__":
-    show_aggie_pride()
+    # show_aggie_pride()
+    pandas_demo()
