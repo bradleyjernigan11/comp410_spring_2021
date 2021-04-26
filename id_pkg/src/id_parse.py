@@ -22,6 +22,13 @@ class IdParse(LogParse):
     def has_denial_of_service(self):
         return (self.df['ID'] == 106017).any()
 
+    def get_low_severity(self):
+        return self.df[self.df['Severity'] >= 6]
+
+    def get_high_severity(self):
+        return self.df[self.df['Severity'] < 5]
+
+
     def handle_asa_message(self, rec):
         """Implement ASA specific messages"""
         # %ASA-2-106016: Deny IP spoof from (10.1.1.1) to 10.11.11.19 on interface TestInterface
@@ -43,6 +50,20 @@ class IdParse(LogParse):
             if m:
                 rec['Source'] = m.group(1)
                 rec['Destination'] = m.group(2)
+          # %ASA-7-713160: Remote user (session Id - id) has been granted access by the Firewall Server
+        if rec['ID'] == 713160:
+            m = re.search(r' user \((\w+) - (\w+)\)', rec['Text'])
+            if m:
+                rec['Session'] = m.group(1)
+                rec['Identifier'] = m.group(2)
+         # %ASA-3-713162: Remote user (db248b6cbdc547bbc6c6fdfb6916eeb - 1) has been rejected by the Firewall Server
+        if rec['ID'] == 713162:
+
+            m = re.search(r'Remote user \((\w+) - (\w+)\) has been rejected by the Firewall Server',
+                              rec['Text'])
+            if m:
+                rec['Source'] = m.group(1)
+                rec['id'] = m.group(2)
 
         return rec
 
