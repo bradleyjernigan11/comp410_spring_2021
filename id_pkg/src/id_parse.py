@@ -65,6 +65,16 @@ class IdParse(LogParse):
                 rec['Source'] = m.group(1)
                 rec['id'] = m.group(2)
 
+        if rec['ID'] == 313008:
+            # %ASA-3-313008: Denied ICMPv6 type=number , code=code from IP_address on interface interface_name
+            message = re.search(
+                r'Denied ICMPv6 type=(\d+), code=(\d+) from (\d+\.\d+\.\d+\.\d+) on interface (\w+)', rec['Text'])
+            if message:
+                rec['Number'] = message.group(1)
+                rec['Code'] = message.group(2)
+                rec['Source'] = message.group(3)
+                rec['Interface'] = message.group(4)
+
         return rec
 
     def handle_syslog_message(self, line):
