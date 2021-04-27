@@ -42,8 +42,16 @@ class FireWallTest(unittest.TestCase):
 
         self.assertTrue((firewall_log_dataframe['Session']).all())
 
-        self.assertEqual(100, len(set(firewall_log_dataframe)))
+        # Taking a set of a dataframe finds the number of columns in
+        # a dataframe, which is 8 in this case
+        self.assertEqual(8, len(set(firewall_log_dataframe)))
 
+        # Here is another way to do that
+        self.assertEqual(8, len(firewall_log_dataframe.columns))
+
+        # And another
+        # 100 rows and 8 columns
+        self.assertEqual((100, 8), firewall_log_dataframe.shape)
 
     def test_has_firewall(self):
         id_pkg_logs = detection.IdParse(self.log_file)
