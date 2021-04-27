@@ -1,7 +1,10 @@
 import unittest
 import os
 import git
+import string
+import random
 import id_pkg as detection
+import pandas as pd
 
 
 class FireWallTest(unittest.TestCase):
@@ -10,19 +13,20 @@ class FireWallTest(unittest.TestCase):
 
     # %ASA-3-713163: Remote user (session Id - id) has been terminated by the Firewall Server
 
-    info = {
-        'Date': 'March 16 2021 10:40:40',
-        'Host': 'HOST',
-        'ID': '%ASA-3-713163',
-        'SessionID': 'kdsnfegnkngerubop3r843yth82gjnf'
-    }
-
     # implementing mock log file for firewall
     with open(log_file, 'w') as f:
-        for session_id in range(1, 256, 1):
+        for session_id in range(1, 101, 1):
+            info = {
+                'Date': 'March 16 2021 10:40:40',
+                'Host': 'HOST',
+                'ID': '%ASA-3-713163',
+                'SessionID': str(''.join(random.choices(string.ascii_lowercase + string.digits, k=15)))
+            }
+
             firewall_log_data = info['Date'] + ' ' + info['Host'] + ' : '
             firewall_log_data = firewall_log_data + info['ID'] + ': '
-            firewall_log_data = firewall_log_data + 'Remote user (' + info['SessionID'] + ' - '
+            firewall_log_data = firewall_log_data + 'Remote user ('
+            firewall_log_data = firewall_log_data + info['SessionID'] + ' - '
             firewall_log_data = firewall_log_data + str(session_id) + ') has been terminated by the Firewall Server \n'
             f.write(firewall_log_data)
 
@@ -34,8 +38,12 @@ class FireWallTest(unittest.TestCase):
         firewall_log_dataframe = id_pkg_logs.df[id_pkg_logs.df['ID'] == 713163]
         # run tests on the dataframe
 
-        self.assertEqual(255, len(firewall_log_dataframe))
-        self.assertTrue((firewall_log_dataframe['Session'] == 'kdsnfegnkngerubop3r843yth82gjnf').all())
+        self.assertEqual(100, len(firewall_log_dataframe))
+
+        self.assertTrue((firewall_log_dataframe['Session']).all())
+
+        self.assertEqual(100, len(set(firewall_log_dataframe)))
+
 
     def test_has_firewall(self):
         id_pkg_logs = detection.IdParse(self.log_file)
